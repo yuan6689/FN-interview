@@ -1,0 +1,37 @@
+<script>
+  // 数组的代理
+  var arr = [1, 2, 3, 4];
+  function createArr(arr) {
+    let handler = {
+      get(target, index, receiver) {
+        index = Number(index);
+        return index < 0 ? index + arr.length : index;
+      },
+    };
+    return new Proxy(arr, handler);
+  }
+  arr = createArr(arr);
+  console.log(arr[-1]);
+
+  // 更加安全地 对函数进行性能监控
+  const isPrime = function (number) {
+    if (number < 2) return false;
+    for (let i = 2; i < number; i++) {
+      if (number % 2 === 0) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const primeProxy = new Proxy(isPrime, {
+    apply(target, thisArg, argArr) {
+      console.log("target, thisArg, argArr: ", target, thisArg, argArr);
+      console.time("count");
+      const res = target.apply(thisArg, argArr);
+      console.timeEnd("count");
+      return res;
+    },
+  });
+  primeProxy(1299827);
+</script>

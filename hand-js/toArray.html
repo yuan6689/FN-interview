@@ -1,0 +1,24 @@
+<div>1</div>
+<div>2</div>
+<div>3</div>
+<div>4</div>
+<div>5</div>
+<div>6</div>
+<div>7</div>
+<div>8</div>
+<div>9</div>
+<div>10</div>
+
+<script>
+  "use strict";
+  const arrLike = document.querySelectorAll("div");
+  console.log(arrLike);
+  const toArray1 = Array.from(arrLike);
+  console.log("使用 Array.from", toArray1);
+  const toArray2 = Array.prototype.slice.call(arrLike);
+  console.log("使用 Array.bind", toArray2);
+  const toArray3 = Array.prototype.concat.apply([], arrLike);
+  console.log("使用Array.concat", toArray3);
+  const toArray4 = [...arrLike];
+  console.log("使用扩展运算符", toArray4);
+</script>

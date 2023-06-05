@@ -1,0 +1,31 @@
+<script>
+  Array.prototype.myForEach = function (func, thisArg = undefined) {
+    console.log(arguments);
+    // 检查是否有传入一个有效的对象(排除此变量为空的可能)
+    if (this == null) {
+      throw new TypeError("this is null");
+    }
+    // 确认回调函数成功定义
+    if (typeof func !== "function") {
+      throw new TypeError(func + "is not a function");
+    }
+    let O;
+    // 转成对象
+    if (thisArg !== undefined) {
+      O = Object(thisArg);
+    } else {
+      O = Object(this);
+    }
+    // console.log(O);
+    const len = O.length >>> 0;
+    let k = 0;
+    while (k < len) {
+      if (k in O) {
+        func.call(thisArg, O[k], k, O);
+      }
+      k++;
+    }
+  };
+  const arr = [1, 2, 3];
+  arr.myForEach((a, b, c) => console.log(a, b, c), [1, 3, 2, 2, 34]);
+</script>
