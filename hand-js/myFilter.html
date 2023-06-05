@@ -1,0 +1,21 @@
+<script>
+  Array.prototype.myFilter = function (func, thisArg = undefined) {
+    if (typeof func !== "function") {
+      return new TypeError(func + "is not a function");
+    }
+    if (this == null) {
+      return new TypeError("this is undefined");
+    }
+    let O;
+    O = Object(this);
+    let length = O.length >>> 0;
+    let res = [];
+    for (let k = 0; k < length; k++) {
+      if (k in O && func.call(thisArg, O[k], k, O)) {
+        res.push(O[k]);
+      }
+    }
+    return res;
+  };
+  console.log([1, 2, 3, 4, 6].myFilter((a) => a > 3));
+</script>

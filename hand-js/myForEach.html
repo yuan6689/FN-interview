@@ -1,6 +1,5 @@
 <script>
   Array.prototype.myForEach = function (func, thisArg = undefined) {
-    console.log(arguments);
     // 检查是否有传入一个有效的对象(排除此变量为空的可能)
     if (this == null) {
       throw new TypeError("this is null");
@@ -11,11 +10,7 @@
     }
     let O;
     // 转成对象
-    if (thisArg !== undefined) {
-      O = Object(thisArg);
-    } else {
-      O = Object(this);
-    }
+    O = Object(this);
     // console.log(O);
     const len = O.length >>> 0;
     let k = 0;

@@ -1,0 +1,22 @@
+<script>
+  Array.prototype.myMap = function (func, thisArg = undefined) {
+    if (typeof func !== "function") {
+      return new TypeError(func + "is not a function");
+    }
+    if (this == null) {
+      return new TypeError("this is undefined");
+    }
+    let O;
+    O = Object(this);
+    let length = O.length >>> 0;
+    let res = [];
+    for (let k = 0; k < length; k++) {
+      if (k in O) {
+        res.push(func.call(thisArg, O[k], k, O));
+      }
+    }
+    return res;
+  };
+
+  console.log([1, 2, 3, 4, 5, 6].myMap((a, b, c) => `我是${a} ${b + c}`, [1]));
+</script>
