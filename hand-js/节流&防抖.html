@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="请输入" id="debounce" />
+    <script>
+      function debounce(fun, delay) {
+        let timer;
+        return function () {
+          if (timer) clearTimeout(timer);
+          let args = arguments;
+          timer = setTimeout(() => {
+            fun.apply(this, args);
+          }, delay);
+        };
+      }
+      
+      // 时间戳实现
+      function throttle1(fun, delay = 200) {
+        let last = new Date().getTime();
+        return function () {
+          let now = new Date().getTime();
+          console.log(now - last <= delay);
+          if (now - last <= delay) return;
+          fun.apply(this, arguments);
+          last = new Date().getTime();
+        };
+      }
+
+      // 计时器实现
+      function throttle2(fun, delay = 200) {
+        let canRun = true;
+        return function () {
+          if (!canRun) return;
+          canRun = false;
+          setTimeout(() => {
+            fun.apply(this, arguments);
+            canRun = true;
+          }, delay);
+        };
+      }
+      function demo() {
+        console.log("发送请求");
+      }
+      function demo1() {
+        console.log("节流");
+      }
+      const debounceInput = document.getElementById("debounce");
+      debounceInput.addEventListener("input", debounce(demo, 1000));
+      window.addEventListener("resize", throttle1(demo1, 2000));
+    </script>
+  </body>
+</html>
